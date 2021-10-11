@@ -74,7 +74,7 @@
   }
 </script>
 
-<div class="selectPane pos-r flex flex-align-center flex-justify-spaceBetween" on:click={handlePick}>
+<div class="selectPane pos-r flex flex-align-center flex-justify-spaceBetween" on:click|stopPropagation={handlePick}>
   <div class="flex flex-align-center">
     <div class="title flex-0 ">{title}：</div>
     {#if desc}
@@ -90,7 +90,9 @@
     {/if}
   </div>
   <div class="flex-0">
-    <CloseIcon on:click={handleClear} />
+    <div on:click|stopPropagation={handleClear} > 
+      <CloseIcon />
+    </div>
   </div>
 </div>
 

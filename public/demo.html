@@ -13,20 +13,35 @@
   </head>
 
   <body>
-    <div>local browser</div>
+    <div>filter 组件demo</div>
+
     <div id="filter"></div>
+    
+    <br>
+    <button id='reset'>reset</button>
+    <button id='init'>init</button>
+    <button id='getData'>getData</button>
+    <button id='filterIcon'>打开筛选</button>
+    <select name="select" id="select">
+      <option value="" disabled>请选择面板</option>
+      <option value="ad">key: 广告渠道; value: ad</option>
+      <option value="ads">key: 广告词; value: ads</option>
+      <option value="keyword">key: 关键词匹配;  value: keyword</option>
+    </select>
+    <button id='keyword'>打开某个选项</button>
+    
 
     <script>
       let selectOptions = [
         {
           key: "广告渠道",
-          value: "ad",
+          value: "ad", // 筛选面板值
           data: [
             {
-              type: "radio",
+              type: "radio", // 可选择 radio | check | input | select
               key: "adkey",
               // value: 'hide',  初始默认值
-              validateMsg: "请选择广告渠道方式",
+              // validateMsg: "请选择广告渠道方式", // 校验提示语  不设置表示不校验
               data: [
                 { key: "屏蔽", value: "hide" },
                 { key: "查询", value: "search" },
@@ -73,7 +88,7 @@
           ],
         },
         {
-          key: "关键dd匹配",
+          key: "关键词匹配",
           value: "keyword",
           data: [
             {
@@ -103,13 +118,85 @@
       ];
 
       window.onload = function () {
+        /*
+          ========================== filter demo ==============================================
+        */
         var filter = new app({
+          // 作用的目标节点
           target: document.getElementById("filter") || document.body,
+          // 设置属性与回调
           props: {
-            selectOptions,
+            // 设置筛选选项
+            selectOptions: selectOptions,
+            onSelect: function(e) {
+              console.log('点击标签回调\n', e);
+            },
+            onConfirm: function (e) {
+              console.log('点击面板确认按钮回调\n', e)
+            }
           },
         });
+
+        const _$ = function(id) {
+          return document.getElementById(id)
+        }
+
+        const resetBtn = document.getElementById('reset')
+        _$('reset').onclick = function() {
+          filter.reset()
+        }
+
+        _$('init').onclick = () => {
+          filter.init()
+        }
+
+        _$('getData').onclick = function() {
+          const filterData = filter.getData()
+          const {data, origin} = filterData
+          alert(JSON.stringify(data))
+        }
+
+        _$('filterIcon').onclick = function () {
+          filter.setVisible(true)
+        }
+
+        _$('keyword').onclick = function() {
+          const select = _$('select')
+          console.log(select.value);
+          if (select.value) {
+            filter.setVisible(true)
+            // 打开selectOptions 里面value=keyword 的选项板
+            filter.setVisibleKey(select.value)
+          } else {
+            alert('请先选择弹出面板')
+          }
+          
+        }
       };
     </script>
+
+
+    <h2>组件使用说明</h2>
+
+    <img src="https://z3.ax1x.com/2021/10/11/5VwQQx.png" alt="">
+    
+    <h4>app: 插件构造函数</h4>
+    <ul>
+      <li>target: 组件插入在元素节点</li>
+      <li>props: 设置属性或回调 参数</li>
+      <li>props.selectOptions: 设置筛选项</li>
+      <li>props.onConfirm: 点击筛选板确认按钮回调</li>
+      <li>props.onSelect: 点击filter标签回调</li>
+    </ul>
+
+    <h4>filter: 实例</h4>
+    <ul>
+      <li> filter: 实例 | 实例方法</li>
+      <li>getData: 获取数据</li>
+      <li>init: 初始化数据，一般配合reset使用, 假如 一开始有设置筛选默认值 可能会遇到这个场景</li>
+      <li>reset: 清除数据</li>
+      <li>setVisible: 手动设置筛选面板   true =》 打开   false => 关闭</li>
+      <li>setVisibleKey: 手动设置具体筛选面板: 参数为设置的面板value</li>
+    </ul>
   </body>
 </html>

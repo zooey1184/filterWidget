@@ -6,10 +6,19 @@
   import { condition, visible, visibleKey } from "./stores";
   import { onMount } from "svelte";
 
+  // props
   export let selectOptions = []
-  export let action = []
   export let showMask = true
+  export let onSelect = (e)=>{}
+  export let onConfirm = (e)=> {}
 
+  // 暴露外部的方法
+  export function setVisible(_visible) {
+    visible.update(e => _visible)
+  }
+  export function setVisibleKey(_key) {
+    visibleKey.update(e => _key)
+  }
   export function getData() {
     const _data = getCondition($condition);
     return {
@@ -17,19 +26,20 @@
       origin: $condition
     }
   }
-  export function setVisible(_visible) {
-    visible.update(e => _visible)
-  }
-  export let onSelect = (e)=>{}
-  export function setVisibleKey(_key) {
-    visibleKey.update(e => _key)
-  }
-
   export function reset() {
     condition.update(e => [])
   }
+  export function init() {
+    condition.update(e => {
+      const l = initCondition()
+      l.forEach((item, index) => {
+        e[index] = item
+      });
+      return e
+    })
+  }
   
-  export let onConfirm = (e)=> {}
+  
 
   
   const initCondition = () => {
@@ -71,13 +81,7 @@
   }
 
   onMount(async () => {
-    condition.update(e => {
-      const l = initCondition()
-      l.forEach((item, index) => {
-        e[index] = item
-      });
-      return e
-    })
+    init()
   })
 
   const handleShowPanel = (e) => {

@@ -12,8 +12,12 @@
   export let key = "";
   export let value = "";
 
+  const _conditionData = $condition.find(item => item.value === value) || {}
   data.map((item) => {
-    item._value = item?.value;
+    const _dataItem = _conditionData?.data?.find(_item => _item.key === item.key) || {}
+    const _dataValue = _dataItem?.value
+
+    item._value = _dataValue
   });
 
   const handleCancel = () => {
@@ -77,6 +81,7 @@
     const { validate } = validateData();
     if (validate?.length) {
       window.filterToast.warning(validate[0].validateMsg);
+      return false
     } else {
       updateCondition();
     }
