@@ -1,5 +1,5 @@
 
-* {
+.filter__main-wrap {
   -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
@@ -8,98 +8,98 @@
     sans-serif;
 }
 
-::-webkit-scrollbar {
+.filter__main-wrap ::-webkit-scrollbar {
   width: 5px;
   border-radius: 5px;
   background-color: #eee;
 }
-::-webkit-scrollbar-track {
+.filter__main-wrap ::-webkit-scrollbar-track {
   border-radius: 4px;
   overflow: hidden;
 }
-::-webkit-scrollbar-thumb {
+.filter__main-wrap ::-webkit-scrollbar-thumb {
   border-radius: 20px;
   background-color: #0067c7;
 }
-.float-r {
+.filter__main-wrap .float-r {
   float: right;
 }
-.pos-r {
+.filter__main-wrap .pos-r {
   position: relative;
 }
-.pos-a {
+.filter__main-wrap .pos-a {
   position: absolute;
 }
-.pos-f {
+.filter__main-wrap .pos-f {
   position: fixed;
 }
-.pos-i {
+.filter__main-wrap .pos-i {
   position: inherit;
 }
 
-.trans-c {
+.filter__main-wrap .trans-c {
   transform: translate3d(-50%, -50%, 0);
   left: 50%;
   top: 50%;
 }
-.trans-y-c {
+.filter__main-wrap .trans-y-c {
   transform: translate3d(0, -50%, 0);
   top: 50%;
 }
 
-.p-8 {
+.filter__main-wrap .p-8 {
   padding: 8px;
 }
-.py-8 {
+.filter__main-wrap .py-8 {
   padding: 8px auto;
 }
-.px-8 {
+.filter__main-wrap .px-8 {
   padding: auto 8px;
 }
-.my-8 {
+.filter__main-wrap .my-8 {
   margin: 8px auto;
 }
-.mt-8 {
+.filter__main-wrap .mt-8 {
   margin-top: 8px;
 }
-.mt-16 {
+.filter__main-wrap .mt-16 {
   margin-top: 16px;
 }
-.mb-8 {
+.filter__main-wrap .mb-8 {
   margin-bottom: 8px;
 }
-.mb-12 {
+.filter__main-wrap .mb-12 {
   margin-bottom: 12px;
 }
-.mb-16 {
+.filter__main-wrap .mb-16 {
   margin-bottom: 16px;
 }
-.checkbox {
+.filter__main-wrap .checkbox {
   margin-right: 8px;
   width: 15px;
   height: 15px;
 }
 
-.highlight {
+.filter__main-wrap .highlight {
   color: #1890ff;
   font-weight: 600;
 }
 
-.bg-white {
+.filter__main-wrap .bg-white {
   background-color: #fff;
 }
-.round-2 {
+.filter__main-wrap .round-2 {
   border-radius: 2px;
 }
-.bg-blue {
+.filter__main-wrap .bg-blue {
   background-color: #1890ff;
 }
-.border-color-blue {
+.filter__main-wrap .border-color-blue {
   border-color: #1890ff;
 }
-.color-blue {
+.filter__main-wrap .color-blue {
   color: #1890ff;
 }
-.color-white {
+.filter__main-wrap .color-white {
   color: #fff;
 }
