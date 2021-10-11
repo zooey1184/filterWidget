@@ -1,0 +1,105 @@
+
+* {
+  -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  font-family: "微软雅黑", "Microsoft YaHei", "PingFang SC", "Helvetica Neue",
+    Helvetica, Arial, "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei",
+    sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 5px;
+  background-color: #eee;
+}
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+  overflow: hidden;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: #0067c7;
+}
+.float-r {
+  float: right;
+}
+.pos-r {
+  position: relative;
+}
+.pos-a {
+  position: absolute;
+}
+.pos-f {
+  position: fixed;
+}
+.pos-i {
+  position: inherit;
+}
+
+.trans-c {
+  transform: translate3d(-50%, -50%, 0);
+  left: 50%;
+  top: 50%;
+}
+.trans-y-c {
+  transform: translate3d(0, -50%, 0);
+  top: 50%;
+}
+
+.p-8 {
+  padding: 8px;
+}
+.py-8 {
+  padding: 8px auto;
+}
+.px-8 {
+  padding: auto 8px;
+}
+.my-8 {
+  margin: 8px auto;
+}
+.mt-8 {
+  margin-top: 8px;
+}
+.mt-16 {
+  margin-top: 16px;
+}
+.mb-8 {
+  margin-bottom: 8px;
+}
+.mb-12 {
+  margin-bottom: 12px;
+}
+.mb-16 {
+  margin-bottom: 16px;
+}
+.checkbox {
+  margin-right: 8px;
+  width: 15px;
+  height: 15px;
+}
+
+.highlight {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+.round-2 {
+  border-radius: 2px;
+}
+.bg-blue {
+  background-color: #1890ff;
+}
+.border-color-blue {
+  border-color: #1890ff;
+}
+.color-blue {
+  color: #1890ff;
+}
+.color-white {
+  color: #fff;
+}

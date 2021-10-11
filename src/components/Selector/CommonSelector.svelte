@@ -1,0 +1,152 @@
+<script>
+  import { createEventDispatcher } from "svelte";
+  import RadioContent from "./RadioContent.svelte";
+  import CheckContent from "./CheckContent.svelte";
+  import Select from "../Select/index.svelte";
+  import ContentModal from "../ContentModal/index.svelte";
+  import { condition } from "../../stores";
+  import Input from "./Input.svelte";
+  const dispatch = createEventDispatcher();
+
+  export let data = [];
+  export let key = "";
+  export let value = "";
+
+  data.map((item) => {
+    item._value = item?.value;
+  });
+
+  const handleCancel = () => {
+    dispatch("cancel");
+  };
+
+  const updateCondition = () => {
+    condition.update((e) => {
+      const hasItem = e.some((item) => item.value === value);
+      if (hasItem) {
+        e.map((item) => {
+          if (item.value === value) {
+            const d = [];
+            data.forEach((ii) => {
+              d.push({
+                ...ii,
+                value: ii._value || ii.value || undefined,
+              });
+            });
+            item.data = d;
+          }
+          return item;
+        });
+      } else {
+        const d = [];
+        data.forEach((ii) => {
+          d.push({
+            ...ii,
+            value: ii._value || ii.value || undefined,
+          });
+        });
+        e.push({
+          key,
+          value,
+          data: d,
+        });
+      }
+
+      return e;
+    });
+  };
+
+  const validateData = () => {
+    let validate_list = [];
+    let validate_strict = [];
+    data.forEach((item) => {
+      if (!item._value?.toString()) {
+        if (item.validateMsg) {
+          validate_list.push(item);
+        }
+        validate_strict.push(item);
+      }
+    });
+    return {
+      validate: validate_list,
+      validate_strict,
+    };
+  };
+
+  const handleConfirm = () => {
+    const { validate } = validateData();
+    if (validate?.length) {
+      window.filterToast.warning(validate[0].validateMsg);
+    } else {
+      updateCondition();
+    }
+    dispatch("confirm", {
+      validate: validate?.length == 0,
+      key,
+      value,
+      data,
+      validateData: validate,
+    });
+  };
+
+  const getDefaultValue = (item) => {
+    const current = $condition.find((ii) => ii.value === value);
+    if (current?.key) {
+      const _current = current?.data?.find((ii) => ii.key === item.key);
+      if (_current) {
+        return _current.value;
+      }
+    }
+  };
+</script>
+
+<ContentModal title={key} on:cancel={handleCancel} on:confirm={handleConfirm}>
+  {#each data as item, _index (_index)}
+    <div>
+      {#if item.type === "radio"}
+        <RadioContent
+          on:change={(e) => {
+            const { value, data } = e.detail;
+            item._value = value;
+          }}
+          defaultValue={getDefaultValue(item) || ""}
+          radioData={item.data}
+        />
+      {/if}
+
+      {#if item.type === "check"}
+        <CheckContent
+          on:change={(e) => {
+            const { value, data } = e.detail;
+            item._value = value;
+          }}
+          checkData={item.data}
+          defaultValue={getDefaultValue(item) || []}
+          quickAction={item?.quickAction || {}}
+        />
+      {/if}
+
+      {#if item.type === "select"}
+        <Select
+          options={item.data}
+          placeholder={item?.placeholder || ""}
+          defaultValue={getDefaultValue(item) || ""}
+          on:change={(e) => {
+            const detail = e.detail;
+            item._value = detail.key;
+          }}
+        />
+      {/if}
+
+      {#if item.type === "input"}
+        <Input
+          placeholder={item?.placeholder}
+          defaultValue={getDefaultValue(item)}
+          on:input={(e) => {
+            item._value = e.detail.value;
+          }}
+        />
+      {/if}
+    </div>
+  {/each}
+</ContentModal>
