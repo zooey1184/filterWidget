@@ -11,6 +11,7 @@
   };
 
   const handleCancel = () => {
+    console.log('this is click div cancel');
     dispatch("cancel");
   };
 </script>
@@ -25,15 +26,15 @@
 
   <div class="btnWrap mt-16">
     <div class="float-r">
-      <button class="btn round-2 btn-default" on:click={handleCancel}>
+      <div class="btn round-2 btn-default" on:click={handleCancel}>
         {cancelTxt}
-      </button>
-      <button
+      </div>
+      <div
         class="btn bg-blue border-color-blue color-white round-2"
         on:click={handleConfirm}
       >
         {confirmTxt}
-      </button>
+      </div>
     </div>
   </div>
 </div>
