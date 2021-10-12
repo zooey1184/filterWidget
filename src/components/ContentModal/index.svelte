@@ -26,7 +26,7 @@
 
   <div class="btnWrap mt-16">
     <div class="flex flex-align-center flex-justify-end">
-      <div class="btn round-2 btn-default" on:click={handleCancel}>
+      <div class="btn round-2 btn-default" style="margin-right: 6px;" on:click={handleCancel}>
         {cancelTxt}
       </div>
       <div

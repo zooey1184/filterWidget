@@ -63,9 +63,9 @@
 {#if checkData?.length}
   <div>
     <div class="my-8 flex flex-align-center flex-justify-spaceBetween">
-      <div>
+      <div class="flex flex-align-center">
         {#if quickAction.all}
-          <div class="btn btnGoast" on:click={handlePickAll}>{quickAction.all}</div>
+          <div class="btn btnGoast" style="margin-right: 4px;" on:click={handlePickAll}>{quickAction.all}</div>
         {/if}
 
         {#if quickAction.reverse}
