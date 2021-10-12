@@ -31,6 +31,7 @@
 	
 
 	<script>
+		let inputVal = ''
 		let selectOptions = [
 			{
 				key: "广告渠道",
@@ -45,6 +46,12 @@
 							{ key: "屏蔽", value: "hide" },
 							{ key: "查询", value: "search" },
 						],
+					},
+					{
+						type: 'input',
+						key: 'language',
+						value: inputVal,
+						placeholder: '请输入文案'
 					},
 					{
 						type: "check",
@@ -132,6 +139,16 @@
 					},
 					onConfirm: function (e) {
 						console.log('点击面板确认按钮回调\n', e)
+					},
+					onChange: function(e) {
+						const {detail} = e
+						if (detail.key=== 'system') {
+							const val = detail._value.join(',')
+							inputVal = val
+							filter.updateValue((e) => {
+								e.next('language', val)
+							}, )
+						}
 					}
 				},
 			});
@@ -152,7 +169,8 @@
 			_$('getData').onclick = function() {
 				const filterData = filter.getData()
 				const {data, origin} = filterData
-				alert(JSON.stringify(data))
+				// alert(JSON.stringify(data))
+				
 			}
 
 			_$('filterIcon').onclick = function () {

@@ -8,8 +8,12 @@
   import {visible, visibleKey} from '../../stores'
 
   export let selectOptions = [];
+  export function updateValue(cb) {
+    selector && selector.updateValue(cb)
+  }
+  let selector;
+  
   const dispatch = createEventDispatcher();
-
   $: {
     act = $visibleKey
   }
@@ -32,6 +36,10 @@
       visibleKey.update(e => '')
     }
     dispatch('confirm', e.detail)
+  }
+
+  const handleChangeForm = (e) => {
+    dispatch('change', e.detail)
   }
 
   const setVisible = () => {
@@ -59,9 +67,11 @@
             <CommonSelector
               key={item[KEY]}
               value={item[VALUE]}
+              bind:this={selector}
               data={item.data}
               on:cancel={handleCancel}
               on:confirm={handleConfirm}
+              on:change={handleChangeForm}
             />
           </div>
         {/if}

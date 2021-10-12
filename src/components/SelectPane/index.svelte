@@ -112,6 +112,7 @@
   }
   .line1 {
     width: 100%;
+    max-width: 160px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

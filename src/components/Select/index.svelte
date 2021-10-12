@@ -24,6 +24,7 @@
       key: item.value,
       item: item,
       index,
+      type: 'select'
     });
   };
 

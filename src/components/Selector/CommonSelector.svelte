@@ -4,13 +4,32 @@
   import CheckContent from "./CheckContent.svelte";
   import Select from "../Select/index.svelte";
   import ContentModal from "../ContentModal/index.svelte";
-  import { condition } from "../../stores";
+  import { condition, currentData } from "../../stores";
   import Input from "./Input.svelte";
   const dispatch = createEventDispatcher();
 
   export let data = [];
   export let key = "";
   export let value = "";
+
+  currentData.update(e => data)
+
+  export function updateValue(cb) {
+    cb && typeof cb === 'function' && cb({key, value, data, next: (key, value) => {
+      const list = data.find(item => item.key === key)
+      list._value = value
+      // currentData.update(e => {
+      //   e.map(item => {
+      //     if (item.key === key) {
+      //       item._value = value
+      //     }
+      //     return item
+      //   })
+      //   return e
+      // })
+      return data
+    }})
+  }
 
   const _conditionData = $condition.find(item => item.value === value) || {}
   data.map((item) => {
@@ -94,25 +113,27 @@
     });
   };
 
-  const getDefaultValue = (item) => {
+  const getDefaultValue = (item, local) => {
     const current = $condition.find((ii) => ii.value === value);
     if (current?.key) {
       const _current = current?.data?.find((ii) => ii.key === item.key);
       if (_current) {
-        return _current.value;
+        
+        return local ? _current._value : _current.value;
       }
     }
   };
 </script>
 
 <ContentModal title={key} on:cancel={handleCancel} on:confirm={handleConfirm}>
-  {#each data as item, _index (_index)}
+  {#each $currentData as item, _index (_index)}
     <div>
       {#if item.type === "radio"}
         <RadioContent
           on:change={(e) => {
             const { value, data } = e.detail;
             item._value = value;
+            dispatch('change', item)
           }}
           defaultValue={getDefaultValue(item) || ""}
           radioData={item.data}
@@ -124,6 +145,7 @@
           on:change={(e) => {
             const { value, data } = e.detail;
             item._value = value;
+            dispatch('change', item)
           }}
           checkData={item.data}
           defaultValue={getDefaultValue(item) || []}
@@ -139,6 +161,7 @@
           on:change={(e) => {
             const detail = e.detail;
             item._value = detail.key;
+            dispatch('change', item)
           }}
         />
       {/if}
@@ -146,11 +169,15 @@
       {#if item.type === "input"}
         <Input
           placeholder={item?.placeholder}
-          defaultValue={getDefaultValue(item)}
+          defaultValue={getDefaultValue(item) || item._value}
           on:input={(e) => {
             item._value = e.detail.value;
           }}
         />
+      {/if}
+
+      {#if !item?.type}
+        {item}
       {/if}
     </div>
   {/each}
