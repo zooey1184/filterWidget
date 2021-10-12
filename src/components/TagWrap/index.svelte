@@ -13,7 +13,7 @@
     {#each filterTags as item, index}
       <div class="tagOffset pos-r">
         <div class="tag">
-          {item.value}
+          {item.key}
         </div>
       </div>
     {/each}
