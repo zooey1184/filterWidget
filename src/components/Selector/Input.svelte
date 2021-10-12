@@ -26,6 +26,7 @@
   .modal__input-common {
     padding: 8px 12px;
     border-radius: 4px;
+    box-sizing: border-box;
     border: 1px solid #ccc;
     outline: none;
     &:focus {

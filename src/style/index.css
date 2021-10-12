@@ -11,6 +11,7 @@
   outline: #76bcfd44 solid 0px;
   transform: translateZ(0);
   transition: all 100ms linear;
+  text-align: center;
 }
 .filter__main-wrap  .btn:hover {
   opacity: 0.85;

@@ -63,21 +63,21 @@
 {#if checkData?.length}
   <div>
     <div class="my-8 flex flex-align-center flex-justify-spaceBetween">
-      <div>
+      <div class="flex flex-align-center">
         {#if quickAction.all}
-          <button class="btn btnGoast" on:click={handlePickAll}>{quickAction.all}</button>
+          <div class="btn btnGoast" style="margin-right: 4px;" on:click={handlePickAll}>{quickAction.all}</div>
         {/if}
 
         {#if quickAction.reverse}
-          <button class="btn btnGoast" on:click={handlePickAllReverse}>
+          <div class="btn btnGoast" on:click={handlePickAllReverse}>
             {quickAction.reverse}
-          </button>
+          </div>
         {/if}
       </div>
       {#if quickAction.clear}
-        <button class="btn btnGoast" on:click={handlePickClear}>
+        <div class="btn btnGoast" on:click={handlePickClear}>
           {quickAction.clear}
-        </button>
+        </div>
       {/if}
     </div>
     {#if quickAction.search}
@@ -117,6 +117,7 @@
   .searchInp {
     height: 30px;
     border-radius: 4px;
+    box-sizing: border-box;
     font-size: 14px;
     outline: none;
     padding-left: 28px;

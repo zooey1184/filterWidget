@@ -76,6 +76,7 @@
 <style lang="less">
   .selectWrap {
     width: 100%;
+    box-sizing: border-box;
     height: 35px;
     padding-left: 8px;
     border-radius: 4px;
