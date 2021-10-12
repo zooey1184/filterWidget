@@ -17,6 +17,7 @@ import { writable } from "svelte/store";
 
 // 筛选条件集合
 export const condition = writable([]);
+export const currentData = writable([])
 
 export const visible = writable(false)
 export const visibleKey = writable('')

@@ -5,7 +5,10 @@
 
   const dispatch = createEventDispatcher()
 
-  let value = defaultValue
+  let value;
+  $: {
+    value = defaultValue
+  }
 </script>
 
 <div>

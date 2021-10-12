@@ -11,6 +11,10 @@
   export let showMask = true
   export let onSelect = (e)=>{}
   export let onConfirm = (e)=> {}
+  export let onChange = e => {}
+  let currentRef;
+  console.log('20211012 17:00')
+
 
   // 暴露外部的方法
   export function setVisible(_visible) {
@@ -38,9 +42,9 @@
       return e
     })
   }
-  
-  
-
+  export function updateValue(cb) {
+    currentRef && currentRef?.updateValue(cb)
+  }
   
   const initCondition = () => {
     const list = []
@@ -129,7 +133,7 @@
           </div>
           {#if $visible}
             <div class="filterIcon" transition:fly={{ duration: 400, y: -20 }}>
-              <Selector {selectOptions} on:confirm={(e) =>  onConfirm(e.detail)}/>
+              <Selector bind:this={currentRef} {selectOptions} on:confirm={(e) => onConfirm(e.detail)} on:change={onChange}/>
             </div>
             {#if showMask}
             <div class="mask" on:click={() => visible.update((e) => false)} />
