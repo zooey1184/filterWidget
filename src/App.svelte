@@ -112,7 +112,7 @@
   
 </script>
 
-<main>
+<main class="filter__main-wrap">
   <div
     class="flex flex-align-center flex-justify-spaceBetween filterWrap"
     style="background-color: rgba(232, 240, 254, 0.4); padding: 0 4px"
