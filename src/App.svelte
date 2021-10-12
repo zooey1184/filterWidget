@@ -106,8 +106,8 @@
             } else {
               _obj.item =
                 ii.type === "check"
-                  ? ii.data.filter((ik) => ii.value.includes(ik.value))
-                  : ii.data.find((ik) => ii.defaultValue.includes(ik.value));
+                  ? ii.data.filter((ik) => ii.value?.includes(ik.value))
+                  : ii.data.find((ik) => ii.defaultValue?.includes(ik.value));
             }
             data.push(_obj);
           }
