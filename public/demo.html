@@ -50,7 +50,6 @@
             {
               type: 'input',
               key: 'language',
-              value: inputVal,
               placeholder: '请输入文案'
             },
             {
@@ -144,7 +143,6 @@
               const {detail} = e
               if (detail.key=== 'system') {
                 const val = detail._value.join(',')
-                inputVal = val
                 filter.updateValue((e) => {
                   e.update('language', val)
                 }, )
