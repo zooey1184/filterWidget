@@ -28,6 +28,8 @@
 		<option value="keyword">key: 关键词匹配;  value: keyword</option>
 	</select>
 	<button id='keyword'>打开某个选项</button>
+
+	<button id='update'>测试 update </button>
 	
 
 	<script>
@@ -89,7 +91,7 @@
 					{
 						type: "input",
 						placeholder: "请输入",
-						key: "asss",
+						key: "ip",
 					},
 				],
 			},
@@ -188,6 +190,11 @@
 					alert('请先选择弹出面板')
 				}
 				
+			}
+
+			_$('update').onclick = function() {
+				filter.update('keyword', 'keyval', 'helo')
+				filter.update('keyword', 'keyword', 'ios')
 			}
 		};
 	</script>

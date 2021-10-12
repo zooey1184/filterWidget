@@ -48,6 +48,11 @@
               ],
             },
             {
+              type: 'input',
+              key: 'language',
+              placeholder: '请输入文案'
+            },
+            {
               type: "check",
               key: "system",
               validateMsg: "请选择渠道",
@@ -133,6 +138,15 @@
             },
             onConfirm: function (e) {
               console.log('点击面板确认按钮回调\n', e)
+            },
+            onChange: function(e) {
+              const {detail} = e
+              if (detail.key=== 'system') {
+                const val = detail._value.join(',')
+                filter.updateValue((e) => {
+                  e.update('language', val)
+                }, )
+              }
             }
           },
         });
