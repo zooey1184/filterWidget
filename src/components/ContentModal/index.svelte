@@ -4,7 +4,7 @@
   const dispatch = createEventDispatcher();
   export let title = "";
   export let confirmTxt = "确定";
-  export let cancelTxt = "cancel";
+  export let cancelTxt = "取消";
 
   const handleConfirm = () => {
     dispatch("confirm");
