@@ -7,91 +7,130 @@
   import { onMount } from "svelte";
 
   // props
-  export let selectOptions = []
-  export let showMask = true
-  export let onSelect = (e)=>{}
-  export let onConfirm = (e)=> {}
-  export let onChange = e => {}
+  export let selectOptions = [];
+  export let showMask = true;
+  export let onSelect = (e) => {};
+  export let onConfirm = (e) => {};
+  export let onChange = (e) => {};
   let currentRef;
-  console.log('20211012 17:00')
-
+  console.log("20211012 17:30");
 
   // 暴露外部的方法
   export function setVisible(_visible) {
-    visible.update(e => _visible)
+    visible.update((e) => _visible);
   }
   export function setVisibleKey(_key) {
-    visibleKey.update(e => _key)
+    visibleKey.update((e) => _key);
   }
   export function getData() {
     const _data = getCondition($condition);
     return {
       data: _data,
-      origin: $condition
-    }
+      origin: $condition,
+    };
   }
   export function reset() {
-    condition.update(e => [])
+    condition.update((e) => []);
   }
   export function init() {
-    condition.update(e => {
-      const l = initCondition()
+    condition.update((e) => {
+      const l = initCondition();
       l.forEach((item, index) => {
-        e[index] = item
+        e[index] = item;
       });
+      return e;
+    });
+  }
+  export function update(parent, key, value) {
+    const hasItem = $condition?.some((item) => item.value === parent);
+    const optionItem = selectOptions.find((item) => item.value === parent);
+    const optChild = optionItem.data.find((ii) => ii.key === key);
+    optChild.value = value;
+
+    console.log(hasItem, optionItem, optChild);
+    // return
+    condition.update((e) => {
+      if (hasItem) {
+        e.map((item) => {
+          if (hasItem) {
+            if (item.value === parent) {
+              const hasChild = item?.data?.some((ii) => ii.key === key);
+
+              if (hasChild) {
+                item.data.forEach((item) => {
+                  if (item.key === key) {
+                    item.value = value;
+                  }
+                });
+              } else {
+                item.data.push(optChild);
+              }
+            }
+          }
+          return item;
+        });
+      } else {
+        e.push({
+          ...optionItem,
+        });
+      }
+      console.log(e);
       return e
-    })
+    });
   }
   export function updateValue(cb) {
-    currentRef && currentRef?.updateValue(cb)
+    currentRef && currentRef?.updateValue(cb);
   }
-  
+
   const initCondition = () => {
-    const list = []
-    selectOptions.forEach(item => {
+    const list = [];
+    selectOptions.forEach((item) => {
       if (item?.data?.length) {
-        const idata = item.data
+        const idata = item.data;
         const obj = {
           key: item.key,
           value: item.value,
-        }
-        const inputVal = {}
-        const data = []
-        idata.forEach(ii => {
+        };
+        const inputVal = {};
+        const data = [];
+        idata.forEach((ii) => {
           if (ii.value) {
             const _obj = {
               key: ii.key,
               type: ii.type,
               value: ii.value,
-              data: ii.data
-            }
-            if (ii.type === 'input') {
-              _obj.item = null
+              data: ii.data,
+            };
+            if (ii.type === "input") {
+              _obj.item = null;
             } else {
-              _obj.item = ii.type === 'check' ? ii.data.filter(ik => ii.value.includes(ik.value)) : ii.data.find(ik => ii.defaultValue.includes(ik.value))
-              
+              _obj.item =
+                ii.type === "check"
+                  ? ii.data.filter((ik) => ii.value.includes(ik.value))
+                  : ii.data.find((ik) => ii.defaultValue.includes(ik.value));
             }
-            data.push(_obj)
-          }  
+            data.push(_obj);
+          }
         });
-        (data.length || Object.keys(inputVal).length) && list.push({
-          ...obj,
-          inputVal,
-          data
-        })
+        (data.length || Object.keys(inputVal).length) &&
+          list.push({
+            ...obj,
+            inputVal,
+            data,
+          });
       }
     });
-    return list
-  }
+    return list;
+  };
 
   onMount(async () => {
-    init()
-  })
+    init();
+  });
 
   const handleShowPanel = (e) => {
     if (selectOptions.length) {
-      visible.update(e => !e)
-      visibleKey.update(e => '')
+      visible.update((e) => !e);
+      visibleKey.update((e) => "");
     }
   };
 
@@ -112,8 +151,6 @@
     });
     return _obj;
   };
-
-  
 </script>
 
 <main class="filter__main-wrap">
@@ -133,10 +170,15 @@
           </div>
           {#if $visible}
             <div class="filterIcon" transition:fly={{ duration: 400, y: -20 }}>
-              <Selector bind:this={currentRef} {selectOptions} on:confirm={(e) => onConfirm(e.detail)} on:change={onChange}/>
+              <Selector
+                bind:this={currentRef}
+                {selectOptions}
+                on:confirm={(e) => onConfirm(e.detail)}
+                on:change={onChange}
+              />
             </div>
             {#if showMask}
-            <div class="mask" on:click={() => visible.update((e) => false)} />
+              <div class="mask" on:click={() => visible.update((e) => false)} />
             {/if}
           {/if}
         </div>
@@ -145,7 +187,11 @@
         {#each $condition as item, index (index)}
           <div>
             {#if item?.key}
-              <SelectPane {index} data={item} on:select={(e) => onSelect(e.detail)} />
+              <SelectPane
+                {index}
+                data={item}
+                on:select={(e) => onSelect(e.detail)}
+              />
             {/if}
           </div>
         {/each}
