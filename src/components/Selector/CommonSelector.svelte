@@ -15,7 +15,7 @@
   currentData.update(e => data)
 
   export function updateValue(cb) {
-    cb && typeof cb === 'function' && cb({key, value, data, next: (key, value) => {
+    cb && typeof cb === 'function' && cb({key, value, data, update: (key, value) => {
       const list = data.find(item => item.key === key)
       list._value = value
       // currentData.update(e => {
