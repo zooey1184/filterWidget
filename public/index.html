@@ -147,6 +147,7 @@
 						if (detail.key=== 'system') {
 							const val = detail._value.join(',')
 							inputVal = val
+							console.log(val);
 							filter.updateValue((e) => {
 								e.update('language', val)
 							}, )

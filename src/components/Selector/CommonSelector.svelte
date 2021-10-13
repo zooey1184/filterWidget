@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import RadioContent from "./RadioContent.svelte";
   import CheckContent from "./CheckContent.svelte";
   import Select from "../Select/index.svelte";
@@ -12,21 +12,23 @@
   export let key = "";
   export let value = "";
 
-  currentData.update(e => data)
+  onMount(()=> {
+    currentData.update(e => data)
+  })
 
   export function updateValue(cb) {
     cb && typeof cb === 'function' && cb({key, value, data, update: (key, value) => {
       const list = data.find(item => item.key === key)
       list._value = value
-      // currentData.update(e => {
-      //   e.map(item => {
-      //     if (item.key === key) {
-      //       item._value = value
-      //     }
-      //     return item
-      //   })
-      //   return e
-      // })
+      currentData.update(e => {
+        e.map(item => {
+          if (item.key === key) {
+            item._value = value
+          }
+          return item
+        })
+        return e
+      })
       return data
     }})
   }
@@ -74,7 +76,6 @@
           data: d,
         });
       }
-
       return e;
     });
   };
@@ -118,7 +119,6 @@
     if (current?.key) {
       const _current = current?.data?.find((ii) => ii.key === item.key);
       if (_current) {
-        
         return local ? _current._value : _current.value;
       }
     }
@@ -170,15 +170,14 @@
         <Input
           placeholder={item?.placeholder}
           defaultValue={getDefaultValue(item) || item._value}
+          value={item._value}
           on:input={(e) => {
             item._value = e.detail.value;
           }}
         />
       {/if}
 
-      {#if !item?.type}
-        {item}
-      {/if}
     </div>
   {/each}
 </ContentModal>
+
