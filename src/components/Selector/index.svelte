@@ -58,7 +58,7 @@
       >
         <span on:click|self={() => handlePick(item.value)}>{item[KEY]}</span>
         <ArrowIcon size={12} />
-        {#if act === item.value}
+        {#if $visibleKey === item.value}
           <div
             transition:fly={{ duration: 200, x: 20 }}
             class="pos-a"

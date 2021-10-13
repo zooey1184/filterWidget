@@ -1,13 +1,14 @@
 <script>
   import { createEventDispatcher } from "svelte";
   export let defaultValue = ''
+  export let value = ''
   export let placeholder = ''
 
   const dispatch = createEventDispatcher()
-
-  let value;
+  
+  let _value;
   $: {
-    value = defaultValue
+    _value = value || defaultValue
   }
 </script>
 
@@ -16,7 +17,7 @@
     class="modal__input-common mt-16"
     placeholder={placeholder || ''}
     style="width: 100%;"
-    bind:value={value}
+    bind:value={_value}
     on:input={e => {
       dispatch('input', {
         value: e.target.value

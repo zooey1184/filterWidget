@@ -11,7 +11,6 @@
   };
 
   const handleCancel = () => {
-    console.log('this is click div cancel');
     dispatch("cancel");
   };
 </script>
