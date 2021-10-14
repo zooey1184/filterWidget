@@ -10,11 +10,23 @@
 	<link rel='stylesheet' href='/build/bundle.css'>
 
 	<script defer src='/build/bundle.js'></script>
-
+	<style>
+		#search {
+			width: 80px;
+			color: #fff;
+			background-color: #339fde;
+			border: none;
+			height: 30px;
+			border-radius: 4px;
+			position: absolute;
+			top: 0;
+			right: 12px
+		}
+	</style>
 </head>
 
 <body>
-	<div id="filter"></div>
+	<div id="filter" ></div>
 
 	<br>
 	<button id='reset'>reset</button>
@@ -136,6 +148,10 @@
 				props: {
 					// 设置筛选选项
 					selectOptions: selectOptions,
+					actions: [
+						'<button id="search" class="search">hello</button>',
+					],
+					icon: '<img src="https://secure.gravatar.com/avatar/ec99ae0d3ab034f135419b1e7d695e44?s=80&d=identicon" />',
 					onSelect: function(e) {
 						console.log('点击标签回调\n', e);
 					},
@@ -152,9 +168,14 @@
 								e.update('language', val)
 							}, )
 						}
+					},
+					onClick: () => {
+						filter.setVisible(true)
 					}
 				},
 			});
+
+			
 
 			const _$ = function(id) {
 				return document.getElementById(id)
@@ -191,6 +212,13 @@
 					alert('请先选择弹出面板')
 				}
 				
+			}
+
+			_$('search').onclick = function() {
+				console.log('ddd');
+				setTimeout(() => {
+					filter.setVisible(false)
+				})
 			}
 
 			_$('update').onclick = function() {

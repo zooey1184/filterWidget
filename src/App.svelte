@@ -9,11 +9,14 @@
   // props
   export let selectOptions = [];
   export let showMask = true;
+  export let icon = ''
   export let onSelect = (e) => {};
   export let onConfirm = (e) => {};
   export let onChange = (e) => {};
+  export let onClick = (e) => {};
+  export let actions = [];
+
   let currentRef;
-  console.log("20211012 17:30");
 
   // 暴露外部的方法
   export function setVisible(_visible) {
@@ -74,8 +77,7 @@
           ...optionItem,
         });
       }
-      console.log(e);
-      return e
+      return e;
     });
   }
   export function updateValue(cb) {
@@ -155,8 +157,9 @@
 
 <main class="filter__main-wrap">
   <div
-    class="flex flex-align-center flex-justify-spaceBetween filterWrap"
+    class="flex flex-align-start flex-justify-spaceBetween filterWrap"
     style="background-color: rgba(232, 240, 254, 0.4); padding: 0 4px"
+    on:click={onClick}
   >
     <div class="flex flex-align-center ">
       {#if selectOptions.length}
@@ -166,7 +169,11 @@
             style="margin-right: 16px"
             on:click={handleShowPanel}
           >
+            {#if icon}
+            <div>{@html icon}</div>
+            {:else}
             <FilterIcon size={28} />
+            {/if}
           </div>
           {#if $visible}
             <div class="filterIcon" transition:fly={{ duration: 400, y: -20 }}>
@@ -177,9 +184,6 @@
                 on:change={onChange}
               />
             </div>
-            {#if showMask}
-              <div class="mask" on:click={() => visible.update((e) => false)} />
-            {/if}
           {/if}
         </div>
       {/if}
@@ -197,7 +201,22 @@
         {/each}
       </div>
     </div>
+
+    <div class="flex flex-align-center" style="padding-top: 10px">
+      {#each actions as item, index (index)}
+        {#if item}
+          <div>
+            {@html item}
+          </div>
+        {/if}
+      {/each}
+    </div>
   </div>
+
+  <!-- mask -->
+  {#if showMask && $visible}
+    <div class="mask" on:click={() => visible.update((e) => false)} />
+  {/if}
 </main>
 
 <style lang="less" scoped>
