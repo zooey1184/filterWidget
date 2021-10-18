@@ -2,13 +2,13 @@
   import { createEventDispatcher } from "svelte";
   import { changeListToMap, changeKeys2List, VALUE, KEY } from "../../utils";
   import SearchIcon from "../Icon/Searh.svelte";
+  import CheckIcon from "../Icon/Check.svelte";
 
   const dispatch = createEventDispatcher();
 
-
   export let checkData = [];
   export let quickAction = {};
-  export let defaultValue = []
+  export let defaultValue = [];
   let searchWord = "";
   let checkGroup = defaultValue;
 
@@ -58,6 +58,15 @@
   const handlePickClear = () => {
     checkGroup = [];
   };
+  // 点击多选框
+  const handleClickCk = (e) => {
+    if (checkGroup.includes(e.value)) {
+      checkGroup = checkGroup.filter((item) => item !== e.value);
+    } else {
+      checkGroup.push(e.value);
+    }
+    console.log(checkGroup);
+  };
 </script>
 
 {#if checkData?.length}
@@ -65,7 +74,13 @@
     <div class="my-8 flex flex-align-center flex-justify-spaceBetween">
       <div class="flex flex-align-center">
         {#if quickAction.all}
-          <div class="btn btnGoast" style="margin-right: 4px;" on:click={handlePickAll}>{quickAction.all}</div>
+          <div
+            class="btn btnGoast"
+            style="margin-right: 4px;"
+            on:click={handlePickAll}
+          >
+            {quickAction.all}
+          </div>
         {/if}
 
         {#if quickAction.reverse}
@@ -81,28 +96,39 @@
       {/if}
     </div>
     {#if quickAction.search}
-    <div class="search pos-r flex mb-8">
-      <div class="pos-a trans-y-c" style="left: 8px; top: 55%">
-        <SearchIcon />
+      <div class="search pos-r flex mb-8">
+        <div class="pos-a trans-y-c" style="left: 8px; top: 55%">
+          <SearchIcon />
+        </div>
+        <input
+          class="searchInp flex-1"
+          bind:value={searchWord}
+          placeholder={quickAction.search}
+        />
       </div>
-      <input
-        class="searchInp flex-1"
-        bind:value={searchWord}
-        placeholder={quickAction.search}
-      />
-    </div>
     {/if}
 
     <div class="checkWrap mb-8">
       {#each filterCheckData as item, index (item[VALUE])}
-        <div class="checkItem flex flex-align-center">
+        <div class={['checkItem flex flex-align-center', checkGroup.includes(item[VALUE]) ? 'checkItemAct' : ''].join(' ')}>
           <input
             type="checkbox"
             class="checkbox"
             value={item[VALUE]}
             bind:group={checkGroup}
           />
-          <label for={item[VALUE]}>{@html highlightWord(item[KEY])}</label>
+          <div
+            class="labelItem flex-1"
+            for={item[VALUE]}
+            on:click={handleClickCk(item)}
+          >
+            {@html highlightWord(item[KEY])}
+          </div>
+          <div>
+            {#if checkGroup.includes(item[VALUE])}
+              <CheckIcon size="12" />
+            {/if}
+          </div>
         </div>
       {/each}
     </div>
@@ -136,6 +162,12 @@
   .checkItem {
     height: 32px;
     font-size: 14px;
+    position: relative;
+    padding: 0 4px;
+    transition: all 150ms linear;
+    &:hover {
+      background-color: rgba(24, 143, 255, 0.1);
+    }
   }
   .btnGoast {
     border: none;
@@ -147,5 +179,15 @@
     &:hover {
       color: @color-blue;
     }
+  }
+  .checkbox {
+    position: absolute;
+    width: 90%;
+    left: 0;
+    height: 100%;
+    opacity: 0;
+  }
+  .checkItemAct {
+    background-color: rgba(238, 238, 238, 0.4);
   }
 </style>
