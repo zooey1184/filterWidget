@@ -36,27 +36,28 @@
 
 <style lang="less" scoped>
   .tagWrap {
-    height: 30px;
+    height: 26px;
     background-color: #fff;
     color: #333;
     margin: 0 4px;
     font-size: 13px;
     border-radius: 4px;
-    max-width: 230px;
+    max-width: 220px;
     padding: 0 4px;
   }
   .tag {
     color: #333;
     background-color: #eee;
-    height: 24px;
+    height: 20px;
     text-align: center;
-    line-height: 24px;
+    line-height: 20px;
     padding: 0 8px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 2px;
+    font-size: 12px;
   }
   .tagOffset {
     margin-left: 4px;

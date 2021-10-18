@@ -78,7 +78,7 @@
   <div class="flex flex-align-center">
     <div class="title flex-0 ">{title}：</div>
     {#if desc}
-      <div class="line1" style="font-size: 13px;">
+      <div class="line1">
         {desc}
       </div>
     {/if}
@@ -99,15 +99,16 @@
 <style lang="less" scoped>
   .selectPane {
     border-radius: 4px;
-    min-height: 34px;
+    min-height: 32px;
     background-color: #1890ff;
     margin-left: 8px;
     margin: 3px;
     color: #fff;
     padding: 0 4px;
     padding-left: 8px;
+    font-size: 12px;
     .title {
-      font-size: 14px;
+      font-size: 12px;
     }
   }
   .line1 {
