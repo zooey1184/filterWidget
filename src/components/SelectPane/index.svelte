@@ -98,8 +98,8 @@
 
 <style lang="less" scoped>
   .selectPane {
-    border-radius: 5px;
-    min-height: 42px;
+    border-radius: 4px;
+    min-height: 34px;
     background-color: #1890ff;
     margin-left: 8px;
     margin: 3px;

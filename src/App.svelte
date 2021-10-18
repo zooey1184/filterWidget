@@ -10,6 +10,8 @@
   export let selectOptions = [];
   export let showMask = true;
   export let icon = ''
+  export let wrapStyle = ''
+  export let wrapClass = ''
   export let onSelect = (e) => {};
   export let onConfirm = (e) => {};
   export let onChange = (e) => {};
@@ -50,7 +52,6 @@
     const optChild = optionItem.data.find((ii) => ii.key === key);
     optChild.value = value;
 
-    console.log(hasItem, optionItem, optChild);
     // return
     condition.update((e) => {
       if (hasItem) {
@@ -157,8 +158,8 @@
 
 <main class="filter__main-wrap">
   <div
-    class="flex flex-align-start flex-justify-spaceBetween filterWrap"
-    style="background-color: rgba(232, 240, 254, 0.4); padding: 0 4px"
+    class={["flex flex-align-start flex-justify-spaceBetween filterWrap", wrapClass].join(' ')}
+    style={wrapStyle}
     on:click={onClick}
   >
     <div class="flex flex-align-center ">
@@ -166,7 +167,7 @@
         <div class="pos-r filterIcon">
           <div
             class="filterIcon"
-            style="margin-right: 16px"
+            style="margin-right: 16px; padding-top: 6px"
             on:click={handleShowPanel}
           >
             {#if icon}
@@ -202,7 +203,7 @@
       </div>
     </div>
 
-    <div class="flex flex-align-center" style="padding-top: 10px">
+    <div class="flex flex-align-center" style="padding-top: 6px">
       {#each actions as item, index (index)}
         {#if item}
           <div>
@@ -224,11 +225,10 @@
     position: relative;
     transition: all 150ms linear;
     box-sizing: border-box;
-    min-height: 52px;
+    min-height: 40px;
     z-index: 9;
-    &:hover {
-      background: rgba(232, 240, 254, 0.7) !important;
-    }
+    background-color: rgba(232, 240, 254, 0.5);
+    padding: 0 4px;
   }
   .filterIcon {
     position: relative;

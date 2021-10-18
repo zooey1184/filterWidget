@@ -149,9 +149,11 @@
 					// 设置筛选选项
 					selectOptions: selectOptions,
 					actions: [
-						'<button id="search" class="search">hello</button>',
+						`<div class="flex flex-align-center" id="action">
+								<div class="btn round-2 bg-blue color-white" id="searchBtn">查询</div>
+								<div style="margin-left: 4px" class="btn" id="exportBtn">导出</div>
+							</div>`
 					],
-					icon: '<img src="https://secure.gravatar.com/avatar/ec99ae0d3ab034f135419b1e7d695e44?s=80&d=identicon" />',
 					onSelect: function(e) {
 						console.log('点击标签回调\n', e);
 					},
@@ -214,16 +216,18 @@
 				
 			}
 
-			_$('search').onclick = function() {
-				console.log('ddd');
-				setTimeout(() => {
-					filter.setVisible(false)
-				})
-			}
-
 			_$('update').onclick = function() {
 				filter.update('keyword', 'keyval', 'helo')
 				filter.update('keyword', 'keyword', 'ios')
+			}
+
+			_$('action').onclick = function(e) {
+				e.stopPropagation()
+			}
+
+			_$('searchBtn').onclick = function(e) {
+				// e.stopPropagation()   上面和下面任选一个 执行stopPropagation()
+				console.log('hello world')
 			}
 		};
 	</script>

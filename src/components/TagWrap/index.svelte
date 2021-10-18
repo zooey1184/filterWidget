@@ -19,13 +19,13 @@
     {/each}
     {#if tags.length > 2}
       <div
-        style="width: 35px; margin-left: 6px"
+        style="width: 35px; margin-left: 4px"
         class={`tag tagMore${index}`}
       >
         {#if !visible}
           +{tags.length}
         {:else}
-          <div style="line-height: 35px;">
+          <div style="line-height: 32px;">
             <MoreIcon />
           </div>
         {/if}
@@ -36,7 +36,7 @@
 
 <style lang="less" scoped>
   .tagWrap {
-    height: 36px;
+    height: 30px;
     background-color: #fff;
     color: #333;
     margin: 0 4px;
@@ -46,20 +46,20 @@
     padding: 0 4px;
   }
   .tag {
-    color: #666;
+    color: #333;
     background-color: #eee;
-    padding: 2px;
-    height: 28px;
+    height: 24px;
     text-align: center;
-    line-height: 26px;
-    width: 68px;
+    line-height: 24px;
+    padding: 0 8px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     cursor: pointer;
+    border-radius: 4px;
   }
   .tagOffset {
-    margin-left: 6px;
+    margin-left: 4px;
     &:first-child {
       margin-left: 0;
     }
