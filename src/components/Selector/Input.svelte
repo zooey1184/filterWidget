@@ -1,14 +1,21 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { tick } from 'svelte';
   export let defaultValue = ''
   export let value = ''
   export let placeholder = ''
-
+  import { blurSelector } from '../../stores'
   const dispatch = createEventDispatcher()
   
   let _value;
   $: {
+    console.log(value);
     _value = value || defaultValue
+  }
+  const handleFocus = () => {
+    setTimeout(() => {
+      blurSelector.update(e => true)
+    }, 0);
   }
 </script>
 
@@ -18,7 +25,9 @@
     placeholder={placeholder || ''}
     style="width: 100%;"
     bind:value={_value}
-    on:input={e => {
+    on:click={handleFocus}
+    on:input={async e => {
+      await tick()
       dispatch('input', {
         value: e.target.value
       })

@@ -21,5 +21,7 @@ export const currentData = writable([])
 
 export const visible = writable(false)
 export const visibleKey = writable('')
+export const blurPane = writable(false)
+export const blurSelector = writable(false)
 
 export const clickClassName = writable("");

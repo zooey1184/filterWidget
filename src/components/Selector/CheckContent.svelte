@@ -3,6 +3,7 @@
   import { changeListToMap, changeKeys2List, VALUE, KEY } from "../../utils";
   import SearchIcon from "../Icon/Searh.svelte";
   import CheckIcon from "../Icon/Check.svelte";
+import { blurSelector } from "../../stores";
 
   const dispatch = createEventDispatcher();
 
@@ -67,6 +68,10 @@
     }
     console.log(checkGroup);
   };
+
+  const handleFocus = () => {
+    blurSelector.update(e => true)
+  }
 </script>
 
 {#if checkData?.length}
@@ -103,6 +108,7 @@
         <input
           class="searchInp flex-1"
           bind:value={searchWord}
+          on:click={handleFocus}
           placeholder={quickAction.search}
         />
       </div>

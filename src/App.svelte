@@ -3,7 +3,7 @@
   import Selector from "./components/Selector/index.svelte";
   import SelectPane from "./components/SelectPane/index.svelte";
   import FilterIcon from "./components/Icon/Filter.svelte";
-  import { condition, visible, visibleKey } from "./stores";
+  import { blurSelector, condition, visible, visibleKey, blurPane } from "./stores";
   import { onMount } from "svelte";
 
   // props
@@ -12,6 +12,8 @@
   export let icon = ''
   export let wrapStyle = ''
   export let wrapClass = ''
+  export let maskClass = ''
+  export let maskStyle = ''
   export let onSelect = (e) => {};
   export let onConfirm = (e) => {};
   export let onChange = (e) => {};
@@ -25,7 +27,15 @@
     visible.update((e) => _visible);
   }
   export function setVisibleKey(_key) {
-    visibleKey.update((e) => _key);
+    console.log(_key);
+    if(!$visibleKey) {
+      visibleKey.update((e) => _key);
+    } else {
+      visibleKey.update((e) => '');
+      setTimeout(() => {
+        visibleKey.update((e) => _key);
+      }, 200);
+    }
   }
   export function getData() {
     const _data = getCondition($condition);
@@ -85,6 +95,10 @@
     currentRef && currentRef?.updateValue(cb);
   }
 
+  $: {
+    blurPane.update(e => $visible)
+  }
+
   const initCondition = () => {
     const list = [];
     selectOptions.forEach((item) => {
@@ -132,8 +146,11 @@
 
   const handleShowPanel = (e) => {
     if (selectOptions.length) {
-      visible.update((e) => !e);
+      setTimeout(() => {
+        visible.update((e) => !e);
       visibleKey.update((e) => "");
+      blurPane.update(e => $visible)
+      }, 0);
     }
   };
 
@@ -154,13 +171,34 @@
     });
     return _obj;
   };
+
+  window.addEventListener('click', () => {
+    blurSelector.update(e => false)
+    blurPane.update(e => false)
+    setTimeout(() => {
+      if (!$blurPane && !$blurSelector) {
+        visible.update(e => false)
+        visibleKey.update(e => '')
+      }
+    }, 30);
+  })
+
+  const handleFocus = () => {
+    setTimeout(() => {
+      blurPane.update(e => true)
+    });
+  }
 </script>
 
 <main class="filter__main-wrap">
   <div
     class={["flex flex-align-start flex-justify-spaceBetween filterWrap", wrapClass].join(' ')}
     style={wrapStyle}
-    on:click={onClick}
+    on:click={(...e) => {
+      setTimeout(() => {
+        onClick(...e)
+      }, 0);
+    }}
   >
     <div class="flex flex-align-center ">
       {#if selectOptions.length}
@@ -177,7 +215,8 @@
             {/if}
           </div>
           {#if $visible}
-            <div class="filterIcon" transition:fly={{ duration: 400, y: -20 }}>
+            <!-- svelte-ignore a11y-positive-tabindex -->
+            <div class="filterIcon" on:click={handleFocus} transition:fly={{ duration: 400, y: -20 }}>
               <Selector
                 bind:this={currentRef}
                 {selectOptions}
@@ -216,7 +255,7 @@
 
   <!-- mask -->
   {#if showMask && $visible}
-    <div class="mask" on:click={() => visible.update((e) => false)} />
+    <div class={['mask', maskClass].join(' ')} style={maskStyle} on:click={() => visible.update((e) => false)} />
   {/if}
 </main>
 
@@ -232,6 +271,9 @@
   }
   .filterIcon {
     position: relative;
+    &:focus {
+      background: pink;
+    }
   }
   .mask {
     position: fixed;

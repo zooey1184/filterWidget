@@ -12,9 +12,7 @@
   export let key = "";
   export let value = "";
 
-  onMount(()=> {
-    currentData.update(e => data)
-  })
+  currentData.update(e => data)
 
   export function updateValue(cb) {
     cb && typeof cb === 'function' && cb({key, value, data, update: (key, value) => {
@@ -29,7 +27,7 @@
         })
         return e
       })
-      return data
+      return currentData
     }})
   }
 

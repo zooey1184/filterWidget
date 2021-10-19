@@ -69,7 +69,14 @@
 
   const handlePick = () => {
     visible.update(e => true)
-    visibleKey.update(e => data.value)
+    if (!$visibleKey) {
+      visibleKey.update(e => data.value)
+    } else {
+      visibleKey.update(e => '')
+      setTimeout(() => {
+        visibleKey.update(e => data.value)
+      }, 200);
+    }
     dispatch('select', data)
   }
 </script>

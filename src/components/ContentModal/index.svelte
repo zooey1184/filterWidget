@@ -1,36 +1,54 @@
 <!-- 内容组件 -->
 <script>
   import { createEventDispatcher } from "svelte";
+  import { blurSelector, blurPane } from "../../stores";
   const dispatch = createEventDispatcher();
   export let title = "";
   export let confirmTxt = "确定";
   export let cancelTxt = "取消";
 
   const handleConfirm = () => {
+    blurSelector.update((e) => true);
     dispatch("confirm");
   };
 
   const handleCancel = () => {
+    blurSelector.update((e) => true);
     dispatch("cancel");
+  };
+  const handleFocus = () => {
+    blurSelector.update((e) => true);
   };
 </script>
 
-<div class="contentWrap pos-r">
+<div
+  class="contentWrap pos-r"
+  on:click={handleFocus}
+>
   {#if title}
     <div class="contetnTitle">{title}</div>
   {/if}
   <div>
-    <slot />
+    <form>
+      <slot />
+    </form>
   </div>
 
   <div class="btnWrap mt-16">
+    <!-- svelte-ignore a11y-positive-tabindex -->
     <div class="flex flex-align-center flex-justify-end">
-      <div class="btn round-2 btn-default" style="margin-right: 6px;" on:click={handleCancel}>
+      <div
+        class="btn round-2 btn-default"
+        tabindex="4"
+        style="margin-right: 6px;"
+        on:click={handleCancel}
+      >
         {cancelTxt}
       </div>
       <div
         class="btn bg-blue border-color-blue color-white round-2"
         on:click={handleConfirm}
+        tabindex="5"
       >
         {confirmTxt}
       </div>

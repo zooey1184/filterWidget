@@ -22,7 +22,15 @@
   // 选中某一项
   const handlePick = (key) => {
     act = key;
-    visibleKey.update(e => key)
+    if (!$visibleKey) {
+      visibleKey.update(e => key)
+    } else {
+      visibleKey.update(e => '')
+      setTimeout(() => {
+        visibleKey.update(e => key)
+      }, 200);
+    }
+    
   };
   // 取消
   const handleCancel = () => {
@@ -47,9 +55,10 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-positive-tabindex -->
 <div class="cascaderWrap round-2 bg-white" on:mousedown={setVisible}>
   <ul>
-    {#each selectOptions as item, index (item[KEY])}
+    {#each selectOptions as item, index (index)}
       <li
         class={`cascaderItem pos-r hoverActive flex flex-align-center flex-justify-spaceBetween ${
           act === item.value ? "activeBg" : ""
@@ -60,7 +69,7 @@
         <ArrowIcon size={12} />
         {#if $visibleKey === item.value}
           <div
-            transition:fly={{ duration: 200, x: 20 }}
+            transition:fly={{ duration: 150, x: 20 }}
             class="pos-a"
             style="left: 265px; top: 0"
           >
