@@ -11,6 +11,8 @@
   export let data = [];
   export let key = "";
   export let value = "";
+  export let confirmBtn='确定'
+  export let cancelBtn = '取消'
 
   currentData.update(e => data)
 
@@ -123,7 +125,7 @@
   };
 </script>
 
-<ContentModal title={key} on:cancel={handleCancel} on:confirm={handleConfirm}>
+<ContentModal title={key} confirmTxt={confirmBtn} cancelTxt={cancelBtn} on:cancel={handleCancel} on:confirm={handleConfirm}>
   {#each $currentData as item, _index (_index)}
     <div>
       {#if item.type === "radio"}

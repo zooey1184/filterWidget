@@ -78,6 +78,8 @@
               value={item[VALUE]}
               bind:this={selector}
               data={item.data}
+              confirmBtn={item.confirmBtn}
+              cancelBtn={item.cancelBtn}
               on:cancel={handleCancel}
               on:confirm={handleConfirm}
               on:change={handleChangeForm}
